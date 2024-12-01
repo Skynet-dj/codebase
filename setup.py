@@ -6,8 +6,8 @@ setup(
     author="DJ",
     author_email="dibyajyotid2024@gmail.com",
     description="A simple example package",
-    long_description=open('README.md').read(),  # You can load a long description from a file like README.md
-    long_description_content_type="text/markdown",
+    long_description="",  # You can load a long description from a file like README.md
+    long_description_content_type="",
     url="https://github.com/username/my_package",
     packages=find_packages(),
     install_requires=[
