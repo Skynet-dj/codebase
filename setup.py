@@ -17,7 +17,7 @@ setup(
     extras_require={},
     entry_points={
         'console_scripts': [
-            'codebase=__main__:boss',  # Entry point for a CLI tool
+            'codebase=__main__:main',  # Entry point for a CLI tool
         ],
     },
     python_requires='>=3.6',
