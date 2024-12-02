@@ -1,4 +1,3 @@
-windows-curses
-tinydb
 rich
+windows-curses
 pyfiglet

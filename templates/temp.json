@@ -1,0 +1,36 @@
+{
+    "metadata": {
+        "name": "project-name",
+        "version": "1.0.0",
+        "description": "A brief description of the project",
+        "author": "Your Name",
+        "license": "MIT",
+        "created_at": "2024-12-01",
+        "updated_at": "2024-12-02",
+        "status": "active",
+        "contributors": [
+            {"name": "Contributor 1", "role": "Developer", "contact": "email1@example.com"},
+            {"name": "Contributor 2", "role": "Designer", "contact": "email2@example.com"}
+        ],
+        "dependencies": [
+            {"name": "Library 1", "version": "1.2.3", "url": "https://example.com/library1"},
+            {"name": "Library 2", "version": "4.5.6", "url": "https://example.com/library2"}
+        ],
+        "repository": "https://github.com/your-username/project-name",
+        "documentation": "https://your-project-docs.com"
+    },
+    "structure": [
+        {"name": "src", "files": [{"name": "index.js", "content": "// Main entry point"}, {"name": "app.js", "content": "// App logic"}]},
+        {"name": "assets", "files": [{"name": "style.css", "content": "/* Styles for the project */"}]},
+        {"name": "README.md", "content": "# Project README\n\nA brief description of the project."},
+        {"name": "LICENSE", "content": "MIT License"},
+        {"name": "docs", "files": [
+            {"name": "index.md", "content": "# Documentation\n\nDetails about the project."},
+            {"name": "setup.md", "content": "## Setup Instructions\n\nHow to install and run the project."}
+        ]},
+        {"name": "images", "files": [
+            {"name": "logo.png", "content": "binary data here..."},
+            {"name": "banner.jpg", "content": "binary data here..."}
+        ]}
+    ]
+}
