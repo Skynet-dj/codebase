@@ -1,5 +1,4 @@
-from utils.requirements import install_requirements
-
+from ..utils.requirements import install_requirements
 
 def main(): 
     try:
