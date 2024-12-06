@@ -1,9 +1,9 @@
-from ..utils.requirements import install_requirements
+from .requirements import install_requirements
 
 def main(): 
     try:
-        import scripts.cli as cli
-        cli.main()
+        import scripts.main as main
+        main.main()
     except ModuleNotFoundError:
         pass
 
