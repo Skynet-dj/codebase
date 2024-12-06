@@ -56,14 +56,19 @@ def install_requirements(requirements_file="requirements.txt"):
             print(f"Attempting to install {package}...")
             subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
-        print("Installation Complete!")
+        
 
     except FileNotFoundError:
         print(f"Error: {requirements_file} not found.")
     except Exception as e:
         print(f"An error occurred while processing requirements: {e}")
     
-
+    banner_fonts()
+    print("Installation Complete!")
+def banner_fonts():
+    fonts = ["ANSI_REGULAR","Bloody"]
+    for i in fonts:
+        subprocess.check_call(f"pyfiglet -L misc/{i}.flf")
 
 # Test the program by running this section directly
 if __name__ == "__main__":

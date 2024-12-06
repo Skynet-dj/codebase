@@ -1,4 +1,4 @@
-from .requirements import install_requirements
+from requirements import install_requirements
 
 def main(): 
     try:
