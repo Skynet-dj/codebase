@@ -29,7 +29,7 @@
     "list":
     {
         "description":"List all projects/templates",
-        "uage": "list projects/templates [flags]",
+        "usage": "list projects/templates [flags]",
         "example": "list projects -p",
         "flags": ["-p -path (for projects)"," -s -sub (show projects under the current-dir)"]
     },
