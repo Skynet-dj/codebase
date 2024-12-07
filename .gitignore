@@ -3,7 +3,7 @@ config.json
 .vscode
 
 #copied commands form this file  -_-
-com.json
+data/com.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
