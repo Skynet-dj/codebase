@@ -1,0 +1,50 @@
+{
+    "create":
+    {
+        "description": "Create a new project/template",
+        "parameters":["project","template"],
+        "usage": "create [project|template] [project/template_template] [flags] [path(for project)]",
+        "example": "create project 'C:/Users/Admin/Desktop'",
+        "flags": ["-d -default (create project in the default dir)"," -n (no prompt)"]
+    },
+
+    "rm":
+    {
+        "description": "Remove a project/template",
+        "parameters": ["project", "template"],
+        "usage": "rm [project|template]",
+        "example": "rm project python-cli -p",
+        "flags": ["-n (no prompt)"]
+    },
+
+    "open":
+    {
+        "description": "Open a project/template in the default editor",
+        "parameters":["project","template"],
+        "usage": "open project/template [project/template_name] [flags]",
+        "example": "open project python-cli -e",
+        "flags": ["-e (To open with explorer)"," -E (To open only in exlporer)"]
+    },
+
+    "list":
+    {
+        "description":"List all projects/templates",
+        "uage": "list projects/templates [flags]",
+        "example": "list projects -p",
+        "flags": ["-p -path (for projects)"," -s -sub (show projects under the current-dir)"]
+    },
+
+    "help":
+    {
+        "description": "Display help for a command",
+        "usage": "help [command]",
+        "example":"help create"
+    },
+
+    "setup":
+    {
+        "description": "Configure CODEBASE, your preferences",
+        "usage": "setup",
+        "example": "setup"
+    }
+}
