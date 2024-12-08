@@ -2,7 +2,7 @@ import os
 import json
 from rich.console import Console
 from rich.table import Table
-from scripts.com_var import ar_  # Input Arrow
+from scripts.com_util import ar_  # Input Arrow
 
 console = Console()
 
@@ -134,18 +134,18 @@ def save_to_json(config):
         json.dump(data, f, indent=4)
 
 
-def setup():
-    try:
-        is_setup = create_config()
-        editor_setup(is_setup)
-        root_path_setup(is_setup)
-        save_to_json({"is_setup": True})
 
-        config_json = "\\".join((os.path.abspath(__file__).split("\\")[:-3] + ["data", "config.json"]))
-        console.print(f"To config other variables refer to [magenta]{config_json}[/magenta]")
-        console.print(f"[bold yellow]SETUP COMPLETE[/bold yellow]")
-    except KeyboardInterrupt:
-        console.print(f"\n[bold red]Setup Canceled![/bold red]")
+try:
+    is_setup = create_config()
+    editor_setup(is_setup)
+    root_path_setup(is_setup)
+    save_to_json({"is_setup": True})
+
+    config_json = "\\".join((os.path.abspath(__file__).split("\\")[:-3] + ["data", "config.json"]))
+    console.print(f"To config other variables refer to [magenta]{config_json}[/magenta]")
+    console.print(f"[bold yellow]SETUP COMPLETE[/bold yellow]")
+except KeyboardInterrupt:
+    console.print(f"\n[bold red]Setup Canceled![/bold red]")
 
 
 

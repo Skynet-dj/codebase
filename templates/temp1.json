@@ -1,12 +1,10 @@
 {
-    "metadata": {
-        "name": "temp1",
-        "description": "A test project template.",
-        "author": "Your Name"
-    },
-    "structure": {
-        "name": "temp1",
-        "folders": [
+    "metadata": {"name_of_template": "temp1"},
+
+    "structure": 
+    {"name": "<project_root_dir_name>",
+        "folders": 
+        [
             {
                 "name": "src",
                 "folders": [

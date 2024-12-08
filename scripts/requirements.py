@@ -3,7 +3,7 @@ import sys
 import os
 
 ENABLE_PROGRESS_BAR = True  # Default is False, no logging unless run directly
-
+FONT_DIR = "fonts"
 # Function to check if a package is already installed
 def is_package_installed(package_name):
     try:
@@ -66,9 +66,10 @@ def install_requirements(requirements_file="requirements.txt"):
     banner_fonts()
     print("Installation Complete!")
 def banner_fonts():
+
     fonts = ["ANSI_REGULAR","Bloody"]
     for i in fonts:
-        subprocess.check_call(f"pyfiglet -L misc/{i}.flf")
+        subprocess.check_call(f"pyfiglet -L {FONT_DIR}/{i}.flf")
 
 # Test the program by running this section directly
 if __name__ == "__main__":

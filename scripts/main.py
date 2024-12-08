@@ -4,7 +4,7 @@ import pyfiglet
 from rich.console import Console
 from rich import print
 import json
-from com_var import ar_
+from scripts.com_util import ar_
 
 CONFIG_FILE = "data/config.json"
 COMMANDS = "data/commands.json"
@@ -109,25 +109,20 @@ def help(command: str):
     except Exception as e:
         print(f"Unexpected Error: {e}")
         
-def main():
-    """Main program function."""
-    
-    #COLOR MAPPING (with rich):
-    #1.Prompt text                = Null
-    #2.Warning text               = Bold Red
-    #3.Task completion text       = Bold Yellow
-    #4.Command name               = Bold Green
-    #5.Command Usage              = Bold Blue
-    #6.Input Arrow: ">>"          = Bold Red
-    #7.Path                       = Magenta
 
-    current_width = os.get_terminal_size().columns
-    current_path = os.getcwd()
+#-------here comes the "main" part of the code----------------#
 
-    display_intro(current_width, current_path)
+#COLOR MAPPING (with rich):
+#1.Prompt text                = Null
+#2.Warning text               = Bold Red
+#3.Task completion text       = Bold Yellow
+#4.Command name               = Bold Green
+#5.Command Usage              = Bold Blue
+#6.Input Arrow: ">>"          = Bold Red
+#7.Path                       = Magenta
 
+current_width = os.get_terminal_size().columns
+current_path = os.getcwd()
 
+display_intro(current_width, current_path)
 
-if __name__ == "__main__":
-    #main()
-    help("create")

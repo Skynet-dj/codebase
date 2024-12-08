@@ -5,7 +5,7 @@
         "parameters":["project","template"],
         "usage": "create [project|template] [project/template_template] [flags] [path(for project)]",
         "example": "create project 'C:/Users/Admin/Desktop'",
-        "flags": ["-d -default (create project in the default dir)"," -n (no prompt)"]
+        "flags": ["-d -default (create project in the default dir)"]
     },
 
     "rm":
