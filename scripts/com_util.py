@@ -17,8 +17,6 @@ except (FileNotFoundError, json.decoder.JSONDecodeError):
     projects = {}
 
 
-
-
 def project_exists(path: str, projects=projects) -> bool:
     def search_in_structure(structure):
         for key, substructure in structure.items():
@@ -58,7 +56,6 @@ def list_projects(flags=None):
     filtered_names = []
     filtered_paths = []
 
-
     if flags:
         if '-p' in flags:
             table.add_column("Path", style="green")
@@ -91,6 +88,3 @@ def list_projects(flags=None):
         console.print(table)
         return
     console.print("[bold green]No projects present[/bold green]")
-  
-
-list_projects("-p")
