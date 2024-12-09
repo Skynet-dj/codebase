@@ -4,24 +4,26 @@ from rich.console import Console
 from scripts.commands.list import list_templates
 from scripts.com_util import project_exists, update_project, TEMPLATE_DIR, ar_
 from scripts.commands.open import open_template
+import shutil
 
 console = Console()
 
-def create_project(temp_name, project_name, path: str = "cwd"):
+def search_template(temp_name: str, want_data: bool=True):
     if ".json" not in temp_name:
         temp_name = temp_name + ".json"
 
     template_file = os.path.join(TEMPLATE_DIR, f"{temp_name}")
     if not os.path.exists(template_file):
         console.print(f"\n[bold red]Template '[bold yellow]{temp_name}[/bold yellow]' not found.[/bold red]")
-        console.print("\nList of available templates:")
-        list_templates()
+        console.print("Use 'list template' to see existing templates")
         return
 
     # Loading template data
     try:
         with open(template_file, 'r') as f:
-            temp_data = json.load(f)
+            if want_data:
+                return json.load(f)
+            return True
     except json.JSONDecodeError as e:
         console.print(f"\n[bold red]Error: [/bold red]{e}")
         console.print(f"The template seems corrupted...")
@@ -29,7 +31,13 @@ def create_project(temp_name, project_name, path: str = "cwd"):
         os.remove(f"{TEMPLATE_DIR}/{temp_name}")
         console.print(f"[yellow]Template deleted successfully.[/yellow]")
         return
+    
+def create_project(temp_name, project_name, path: str = "cwd") -> bool:
 
+    temp_data = search_template(temp_name)
+    if not temp_name:
+        return 
+    
     # Collect required variables for placeholders in the template
     variables = {}
     placeholders = set()
@@ -100,7 +108,6 @@ def create_project(temp_name, project_name, path: str = "cwd"):
             console.print(f"[yellow]Template deleted successfully.[/yellow]")
             return
 
-    # Create the project structure and files
     folder_path = os.path.join(path, project_name.replace(" ", "_"))
     os.makedirs(folder_path, exist_ok=False)
 
@@ -108,6 +115,25 @@ def create_project(temp_name, project_name, path: str = "cwd"):
 
     update_project(folder_path, project_name)
     console.print(f"[bold yellow]Project created successfully.[/bold yellow]")
+    return True
 
-# Example usage
-create_project("python0", "my_project", "C:/Users/ASUS/Desktop/CODE/project")
+
+def create_template(temp_name: str, from_existing: bool=False) -> None :    
+    if from_existing:
+        console.print(f"Enter template to use ")
+        temp = console.input(f"{ar_} ")
+        if search_template(temp, want_data=False):
+            shutil.copy(f'{TEMPLATE_DIR}/{temp}.json', f'{TEMPLATE_DIR}/{temp_name}.json')
+            #open the template in the configured editor 
+            open_template(temp_name)
+            return
+    try:
+        with open(f"{TEMPLATE_DIR}/{temp_name}.json", "x") as f:
+            pass
+        return "op"
+    except FileExistsError as e:
+        console.print(f"[bold red]{e}[/bold red]")
+        console.print(f"Use 'list template' to see existing templates")
+        return
+    return True
+

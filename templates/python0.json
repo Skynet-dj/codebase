@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "name_of_template": "{{ template_name }}"
+    "name_of_template": "python0"
   },
   "structure": {
     "folders": [

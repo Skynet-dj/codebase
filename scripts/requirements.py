@@ -1,7 +1,8 @@
 import subprocess
 import sys
 import os
-from scripts.com_util import FONT_DIR
+
+FONT_DIR = "fonts"
 
 ENABLE_PROGRESS_BAR = True  # Default is False, no logging unless run directly
 # Function to check if a package is already installed
@@ -37,7 +38,6 @@ def install_requirements(requirements_file="requirements.txt"):
             if ENABLE_PROGRESS_BAR:
                 print_progress_bar(i, total_packages)
 
-
             package = package.strip()
             if not package:
                 print("Skipping empty line in requirements file.")
@@ -45,8 +45,7 @@ def install_requirements(requirements_file="requirements.txt"):
 
             package_name = package.split('==')[0].split('>=')[0].split('<=')[0]
 
-            # Print the progress bar at the start of each iteration
-            
+            # Print the progress bar at the start of each iteration            
 
             # Check if the package is already installed
             if is_package_installed(package_name):
@@ -65,8 +64,8 @@ def install_requirements(requirements_file="requirements.txt"):
     print("Installation Complete!")
 def banner_fonts():
     fonts = [f for f in os.listdir(FONT_DIR)]
-    print(fonts)
     for i in fonts:
+        print(i)
         subprocess.check_call(f"pyfiglet -L {FONT_DIR}/{i}")
 
 # Test the program by running this section directly
