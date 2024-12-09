@@ -4,10 +4,7 @@ import pyfiglet
 from rich.console import Console
 from rich import print
 import json
-from scripts.com_util import ar_
-
-CONFIG_FILE = "data/config.json"
-COMMANDS = "data/commands.json"
+from scripts.com_util import CONFIG_FILE, COMMANDS_FILE,ar_
 
 # Initialize the console from Rich for color
 console = Console()
@@ -21,9 +18,9 @@ def display_intro(console_width, current_path):
         with open(CONFIG_FILE, "r") as f:
             config = json.load(f)
         fig = Figlet(font = config["banner-font"])
-        banner_colour = config["banner-colour"]
+        banner_colour = config["banner-colour"]        
     except (pyfiglet.FontNotFound,FileNotFoundError,KeyError) :
-        fig = Figlet(font = "bloody")
+        fig = Figlet(font = "ansi_regular")
         banner_colour = "red"
 
     # Generate ASCII art
@@ -58,7 +55,7 @@ def display_intro(console_width, current_path):
 def help(command: str):
     try:
         # Load the command data from the JSON file
-        with open(COMMANDS, "r") as f:
+        with open(COMMANDS_FILE, "r") as f:
             commands_data = json.load(f)
 
         if command in commands_data:
@@ -120,6 +117,7 @@ def help(command: str):
 #5.Command Usage              = Bold Blue
 #6.Input Arrow: ">>"          = Bold Red
 #7.Path                       = Magenta
+#I'm gonna use any color I like for the tables 
 
 current_width = os.get_terminal_size().columns
 current_path = os.getcwd()

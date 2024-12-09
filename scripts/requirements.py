@@ -1,9 +1,9 @@
 import subprocess
 import sys
 import os
+from scripts.com_util import FONT_DIR
 
 ENABLE_PROGRESS_BAR = True  # Default is False, no logging unless run directly
-FONT_DIR = "fonts"
 # Function to check if a package is already installed
 def is_package_installed(package_name):
     try:
@@ -56,8 +56,6 @@ def install_requirements(requirements_file="requirements.txt"):
             print(f"Attempting to install {package}...")
             subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
-        
-
     except FileNotFoundError:
         print(f"Error: {requirements_file} not found.")
     except Exception as e:
@@ -66,13 +64,15 @@ def install_requirements(requirements_file="requirements.txt"):
     banner_fonts()
     print("Installation Complete!")
 def banner_fonts():
-
-    fonts = ["ANSI_REGULAR","Bloody"]
+    fonts = [f for f in os.listdir(FONT_DIR)]
+    print(fonts)
     for i in fonts:
-        subprocess.check_call(f"pyfiglet -L {FONT_DIR}/{i}.flf")
+        subprocess.check_call(f"pyfiglet -L {FONT_DIR}/{i}")
 
 # Test the program by running this section directly
 if __name__ == "__main__":
+    banner_fonts()
+    exit()
     ENABLE_PROGRESS_BAR = False  # Set to True if you want to see logs
     requirements_file = 'requirements.txt'  # Adjust the path as needed
     install_requirements(requirements_file)

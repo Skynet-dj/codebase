@@ -3,9 +3,9 @@
     {
         "description": "Create a new project/template",
         "parameters":["project","template"],
-        "usage": "create [project|template] [project/template_template] [flags] [path(for project)]",
+        "usage": "create [project|template] [flags] [path(for project)]",
         "example": "create project 'C:/Users/Admin/Desktop'",
-        "flags": ["-d -default (create project in the default dir)"]
+        "flags": ["-r -root (create project in the default dir)"]
     },
 
     "rm":

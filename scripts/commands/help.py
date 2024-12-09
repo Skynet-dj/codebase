@@ -4,6 +4,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.text import Text
 
+
 # Initialize the console for printing styled text
 console = Console()
 

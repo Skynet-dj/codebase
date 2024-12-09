@@ -2,13 +2,9 @@ import os
 import json
 from rich.console import Console
 from rich.table import Table
-from scripts.com_util import ar_  # Input Arrow
+from scripts.com_util import CONFIG_FILE, PROJECTS_FILE, ar_ # Input Arrow (ar_)
 
 console = Console()
-
-CONFIG_FILE = "data/config.json"
-PROJECTS_FILE = "data/projects.json"
-
 
 def create_config():
     try:

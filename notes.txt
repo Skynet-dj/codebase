@@ -1,10 +1,12 @@
-1.Review the ./scripts/com_util.project_list() once again
-2.If needed create a table(colums: list) function in ./scripts/com_util.py to be used for all table creation
-3.the ./scripts/commands/help.py may be removed. General help is not necessery 
+1.Review the ./scripts/com_util.project_list() once again     [done]
+2.If needed create a table(colums: list) function in ./scripts/com_util.py to be used for all table creation  [no]
+3.the ./scripts/commands/help.py may be removed. General help is not necessery   
     (this program does not run through cmd even loop rather is has its own loop)
 
-[CHINMOY]    
+[CHINMOY]  [done]  
 4.write the main event loop
     use a try-except block  exceptions--> KeyboardInturrept, 
     commands for terminal should be send to the terminal
 5.Improve the ./scripts.help() function 
+
+6.Review and debug the create_project() 
