@@ -12,10 +12,10 @@ from codebase.scripts.command_handle import command_handle, MissingArgumentError
 # Initialize the console from Rich for color
 console = Console()    
 
-def display_intro(console_width, current_path):
+def display_intro(console_width):
     """Display the introduction, ASCII art, and current path."""
 
-    subprocess.call("cls" if os.name == "nt" else "clear", shell=True)    
+    subprocess.run("cls" if os.name == "nt" else "clear", shell=True)    
     while True:
         try:
             with open(CONFIG_FILE, "r") as f:
@@ -28,7 +28,7 @@ def display_intro(console_width, current_path):
             banner_colour = banner_color
             break
         except pyfiglet.FontNotFound:
-            subprocess.call(f"python codebase/scripts/install_fonts.py", shell=True)
+            subprocess.run(f"python codebase/scripts/install_fonts.py", shell=True)
 
     # Generate ASCII art
     ascii_art_lines = fig.renderText(f"{tool_name.upper()}").split("\n")
@@ -77,15 +77,16 @@ def display_intro(console_width, current_path):
 #6.Input Arrow: ">>"          = Bold Red
 #7.Path                       = Magenta
 #I'm gonna use any color I like for the tables 
-current_width = os.get_terminal_size().columns
-current_path = os.getcwd()
 
-display_intro(current_width, current_path)
+
+current_width = os.get_terminal_size().columns
+display_intro(current_width)
 
 #---the even loop------#
 try:
     while True:
-        input_ = console.input(f"{ar_} ")
+        current_path = os.getcwd()
+        input_ = console.input(f"{current_path} {ar_} ")
         if not input_:
             continue
         try:

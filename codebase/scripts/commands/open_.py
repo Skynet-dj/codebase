@@ -14,15 +14,15 @@ def load_config():
 
 def open_project(path: str) -> None:
     command = load_config()
-    subprocess.call(f"{command} {path}", shell=True)
+    subprocess.run(f"{command} {path}", shell=True)
     return
 
 def open_template(path: str) -> None:
     command = load_config()
-    subprocess.call(f"{command} {path}", shell=True)
+    subprocess.run(f"{command} {path}", shell=True)
     return
 
 def open_explorer(path: str, ) -> None:
     command = load_config()
-    subprocess.call(f"explorer {path}", shell=True)
+    subprocess.run(f"explorer {path}", shell=True)
     return

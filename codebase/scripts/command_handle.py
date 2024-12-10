@@ -4,7 +4,7 @@ import subprocess
 from rich.console import Console
 from codebase.scripts.com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
 from codebase.scripts.com_util import search_template, search_project, root_path
-from codebase.scripts.commands import create, list_, open_, rm
+from codebase.scripts.commands import create, list_, open_, rm, see
 
 console = Console()
 
@@ -31,10 +31,11 @@ def command_handle(passed_command: str):
     if not command:
         console.print("[bold red]Error: No command provided![/bold red]")
         return
+    
 
     # Validate against known commands
-    if command[0] not in all_commands:
-        subprocess.call(passed_command, shell=True)
+    if command[0] not in all_commands :
+        subprocess.run(passed_command, shell=True)
         return
 
     # Process recognized commands
@@ -128,6 +129,18 @@ def command_handle(passed_command: str):
         elif target == "templates":
             list_.list_templates()
 
+    #command: see
+    elif cmd_name == "see":
+        if len(command) <3:
+            raise MissingArgumentError(cmd_name)
+        target = command[1]
+        name = command[2]
+
+        if target == "project":
+            see.see_project(name)
+        elif target == "template":
+            see.see_template(name)
+
     # Command: help
     elif cmd_name == "help":
         if len(command) < 2:
@@ -138,7 +151,7 @@ def command_handle(passed_command: str):
         help_command = command[1]
         if help_command in all_commands:
             details = all_commands[help_command]
-            console.print(f"\nCommand [bold blue]{help_command}[/bold blue] Details:")
+            console.print(f"Command [bold blue]{help_command}[/bold blue] Details:")
             console.print(f"[bold cyan]Description[/bold cyan]: {details['description']}")
             console.print(f"[bold cyan]Usage[/bold cyan]: {details['usage']}")
             console.print(f"[bold cyan]Example[/bold cyan]: {details['example']}")

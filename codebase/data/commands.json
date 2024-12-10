@@ -47,6 +47,12 @@
         "usage": "setup",
         "example": "setup"
     },
+    "see":
+    {
+        "description": "Show the structure of project/template",
+        "usage": "see project/template project/template_name",
+        "example": "see project python-cli"
+    },
     "exit":
     {
         "description" : "Exit the program",
