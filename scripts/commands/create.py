@@ -112,4 +112,3 @@ def create_template(temp_name: str, from_existing: bool=False) -> None :
         console.print(f"Use 'list template' to see existing templates")
         return
     return True
-

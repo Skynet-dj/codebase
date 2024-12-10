@@ -3,7 +3,7 @@
     {
         "description": "Create a new project/template",
         "parameters":["project","template"],
-        "usage": "create [project|template] [flags] [path(for project)]",
+        "usage": "create project/template <flags> <path(for project)>",
         "example": "create project 'C:/Users/Admin/Desktop'",
         "flags": ["-r -root (create project in the default dir)"]
     },
@@ -12,7 +12,7 @@
     {
         "description": "Remove a project/template",
         "parameters": ["project", "template"],
-        "usage": "rm [project|template]",
+        "usage": "rm project/template project/template_name <flags>",
         "example": "rm project python-cli -p",
         "flags": ["-n (no prompt)"]
     },
@@ -21,7 +21,7 @@
     {
         "description": "Open a project/template in the default editor",
         "parameters":["project","template"],
-        "usage": "open project/template [project/template_name] [flags]",
+        "usage": "open project/template project/template_name <flags>",
         "example": "open project python-cli -e",
         "flags": ["-e (To open with explorer)"," -E (To open only in exlporer)"]
     },
@@ -29,7 +29,7 @@
     "list":
     {
         "description":"List all projects/templates",
-        "usage": "list projects/templates [flags]",
+        "usage": "list projects/templates <flags>",
         "example": "list projects -p",
         "flags": ["-p -path (for projects)"," -s -sub (show projects under the current-dir)"]
     },
@@ -37,7 +37,7 @@
     "help":
     {
         "description": "Display help for a command",
-        "usage": "help [command]",
+        "usage": "help <command>",
         "example":"help create"
     },
 

@@ -2,7 +2,7 @@ import os
 from scripts.com_util import Table, console, projects, TEMPLATE_DIR
 
 def list_projects(flags=None):
-    table = Table(show_header=True, header_style="magenta", title="PROJECTS")
+    table = Table(show_header=True, header_style="magenta")
     table.add_column("Project_Name")
 
     all_names = []

@@ -2,7 +2,7 @@ import os
 import json
 from rich.console import Console
 from rich.table import Table
-from scripts.com_util import CONFIG_FILE, PROJECTS_FILE, ar_ # Input Arrow (ar_)
+from scripts.com_util import CONFIG_FILE, PROJECTS_FILE,tool_name, ar_ # Input Arrow (ar_)
 
 console = Console()
 
@@ -96,7 +96,7 @@ def editor_setup(is_setup):
         config["text-editor-command"] = command
 
     
-    console.print(f"\n[bold yellow]Selected Editor: {config['text-editor']} [/bold yellow]")
+    console.print(f"[bold yellow]Selected Editor: {config['text-editor']} [/bold yellow]")
     return config
 
 
@@ -143,7 +143,8 @@ try:
     config2 = root_path_setup(root_path)
 
     save_to_json(config1)
-    save_to_json(config2)
+    if not config2:
+        save_to_json(config2)
     save_to_json({"is_setup": True})
 
     config_json = "\\".join((os.path.abspath(__file__).split("\\")[:-3] + ["data", "config.json"]))

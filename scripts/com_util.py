@@ -6,7 +6,15 @@ from rich.table import Table
 console = Console()
 
 #common var/constants to be used throught the package
+tool_name: str = "Codebase"
 ar_ = "[bold red]>>[/bold red]"
+#defaults
+text_editor = "Micro"
+text_editor_command = "micro"
+root_path = ""
+banner_font = "ansi_regular"
+banner_color = "red"
+
 CONFIG_FILE = "data/config.json"
 PROJECTS_FILE = "data/projects.json"
 TEMPLATE_DIR = "templates"
@@ -23,7 +31,7 @@ except (FileNotFoundError, json.decoder.JSONDecodeError):
     projects = {}
 
 
-def search_template(temp_name: str, want_data: bool=True):
+def search_template(temp_name: str, want_data: bool=True, temp_path: bool=False):
     if ".json" not in temp_name:
         temp_name = temp_name + ".json"
 
@@ -31,8 +39,9 @@ def search_template(temp_name: str, want_data: bool=True):
     if not os.path.exists(template_file):
         console.print(f"\n[bold red]Template '[bold yellow]{temp_name}[/bold yellow]' not found.[/bold red]")
         console.print("Use 'list template' to see existing templates")
-        return
-
+        return 
+    if temp_path:
+        return template_file
     # Loading template data
     try:
         with open(template_file, 'r') as f:
@@ -46,7 +55,23 @@ def search_template(temp_name: str, want_data: bool=True):
         os.remove(f"{TEMPLATE_DIR}/{temp_name}")
         console.print(f"[yellow]Template deleted successfully.[/yellow]")
         return
+
+def search_project(project_name: str, ask_if_multiple: bool = False):
+    if project_name not in projects:
+        console.print(f"[bold red]Project '{project_name}' does not exist.[/bold red]")
+        console.print(f"Use 'list projects' to see existng tempaltes")
+        return 
+    projects =  projects[project_name]  
+    if not ask_if_multiple:
+        return projects
     
+    if len(projects) > 1:
+        console.print(f"Projects with name '{project_name}':")
+        for i,project in enumerate(projects, start=1):
+            print(f"{i}: {project}")
+        index = console.input(f"Index {ar_}")
+        return projects[index-1]
+
 def project_exists(path: str, projects=projects) -> bool:
     if not projects:
         return False
