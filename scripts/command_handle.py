@@ -1,5 +1,6 @@
 import os
 import json
+import subprocess
 from rich.console import Console
 from scripts.com_util import CONFIG_FILE, COMMANDS_FILE,ar_, tool_name
 from scripts.com_util import search_template, search_project
@@ -22,6 +23,11 @@ def command_handle(passed_command: str):
     #----------------------------------------------------------------------
     tokenised_command = passed_command.split()
     command: list = [token for token in tokenised_command if "-" not in token]
+
+    if len(command) > 3:
+        console.print(f"[bold red]Error: more arguments than required[/bold red]")
+        return
+
     flags: list = [token for token in tokenised_command if "-" in token]
     for flag in flags:
         flag = flag.strip()
@@ -32,12 +38,12 @@ def command_handle(passed_command: str):
     for com in command:
         if com in all_commands:
             no_of_command += 1
-
-    if no_of_command > 1:
-        console.print(f"[bold red]ArgumenInvalid  argument for command: <{command[0]}> [/bold red]")
+    
+    if no_of_command > 1 and not command[0] == "help":
+        console.print(f"[bold red][InvalidArgumentError]: argument for command <{command[0]}> [/bold red]")
         return
     if "-e" and "-E" in flags:
-        console.print(f"[bold red]Cannot have both <-e> and <-E> as flags[/bold red]")
+        console.print(f"[bold red][FlagError]: Cannot have both <-e> and <-E> as flags[/bold red]")
         return
 
     try:
@@ -47,7 +53,7 @@ def command_handle(passed_command: str):
         root_path = None
 
     if not command or command[0] not in all_commands:
-        os.system(passed_command)
+        subprocess.check_call(passed_command, shell=True)
         return
 
     cmd_name = command[0]

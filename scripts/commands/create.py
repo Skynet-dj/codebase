@@ -105,10 +105,12 @@ def create_template(temp_name: str, from_existing: bool=False) -> None :
             return
     try:
         with open(f"{TEMPLATE_DIR}/{temp_name}.json", "x") as f:
-            pass
+            json.dump({},f)
+            
         return "op"
     except FileExistsError as e:
         console.print(f"[bold red]{e}[/bold red]")
         console.print(f"Use 'list template' to see existing templates")
         return
     return True
+

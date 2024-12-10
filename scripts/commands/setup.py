@@ -63,9 +63,8 @@ def editor_setup(is_setup):
 
     input_ = console.input(f"\nDo you want to use the default editor 'Micro' (y/n) {ar_} ")
     if input_.lower() in ["y", "yes"]:
-        save_to_json({"text-editor": "Micro", "text-editor-command": "micro"})
         console.print(f"[bold yellow]Selected Editor: Micro [/bold yellow]")
-        return
+        return  {"text-editor": "Micro", "text-editor-command": "micro"}
 
     table = Table(show_header=True, style="bold cyan")
     table.add_column("Editors", style="bold red")
@@ -143,7 +142,7 @@ try:
     config2 = root_path_setup(root_path)
 
     save_to_json(config1)
-    if not config2:
+    if config2:
         save_to_json(config2)
     save_to_json({"is_setup": True})
 

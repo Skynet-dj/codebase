@@ -1,6 +1,6 @@
 import os
 import json
-
+import subprocess
 while True:
     try:
         from pyfiglet import Figlet
@@ -93,12 +93,13 @@ try:
         input_ = console.input(f"{ar_} ")
         if not input_:
             continue
-
         try:
             command_handle(input_)
         except (MissingArgumentError) as e:
             console.print(f"[bold red]MissingArgumentError: Missing argument for '{e}'[/bold red]")
             command_handle(f"help {e}")
+        except(subprocess.CalledProcessError) as e:
+            console.print(f"[bold red]{e}[/bold red]")
         print()
 except KeyboardInterrupt:
     console.print(f"[bold yellow]Exiting the program...[/bold yellow]")
