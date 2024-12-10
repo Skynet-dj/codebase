@@ -79,7 +79,7 @@ def command_handle(passed_command: str):
                 create.create_project(template_name, project_name)
 
         elif command[1] == "template":
-            template_name = console.input(f"Template Name {ar_}")
+            template_name = console.input(f"Template Name {ar_} ")
             from_existing = console.input(f"Create from existing template? (y/n) {ar_} ").strip().lower()
             if from_existing in ("y", "yes"):
                 create.create_template(template_name, from_existing=True)
@@ -121,14 +121,15 @@ def command_handle(passed_command: str):
         if target == "project":      
             path = search_project(name,True)
             if not path:
-                console.print(f"Project '{name} does not exist'")
                 return
     
             if "-e" in flags:
                 open_.open_project(name)
                 open_.open_explorer(path)
+                return
             elif "-E" in flags:
                 open_.open_explorer(path)
+                return
 
         elif target == "template":
             path = search_template(name, False, True)
@@ -171,7 +172,8 @@ def command_handle(passed_command: str):
     # Command: setup
     elif cmd_name == "setup":
         os.system("python scripts/commands/setup.py")
-
+    elif cmd_name == "exit":
+        raise KeyboardInterrupt
     else:
         console.print(f"[bod red]Error: Command '{cmd_name}' not recognized.[/bold red]")
     

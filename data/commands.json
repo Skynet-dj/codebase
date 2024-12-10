@@ -46,5 +46,11 @@
         "description": "Configure CODEBASE, your preferences",
         "usage": "setup",
         "example": "setup"
+    },
+    "exit":
+    {
+        "description" : "Exit the program",
+        "usage" : "exit",
+        "example" : "exit"
     }
 }

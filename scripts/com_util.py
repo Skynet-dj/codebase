@@ -56,7 +56,7 @@ def search_template(temp_name: str, want_data: bool=True, temp_path: bool=False)
         console.print(f"[yellow]Template deleted successfully.[/yellow]")
         return
 
-def search_project(project_name: str, ask_if_multiple: bool = False):
+def search_project(project_name: str, ask_if_multiple: bool = False, projects=projects):
     if project_name not in projects:
         console.print(f"[bold red]Project '{project_name}' does not exist.[/bold red]")
         console.print(f"Use 'list projects' to see existng tempaltes")
@@ -86,7 +86,7 @@ def project_exists(path: str, projects=projects) -> bool:
     return search_in_structure(projects)
 
 
-def update_project(path: str, project_name: str, project_should_exist = False):    
+def update_project(path: str, project_name: str, project_should_exist = False, projects=projects):    
     if project_name not in projects.keys() :
         projects[project_name] = []
 
