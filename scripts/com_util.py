@@ -69,7 +69,7 @@ def search_project(project_name: str, ask_if_multiple: bool = False, projects=pr
         console.print(f"Projects with name '{project_name}':")
         for i,project in enumerate(projects, start=1):
             print(f"{i}: {project}")
-        index = console.input(f"Index {ar_}")
+        index = int(console.input(f"Index {ar_}"))
         return projects[index-1]
 
 def project_exists(path: str, projects=projects) -> bool:

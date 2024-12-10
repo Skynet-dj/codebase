@@ -26,7 +26,7 @@ def display_intro(console_width, current_path):
         try:
             with open(CONFIG_FILE, "r") as f:
                 config = json.load(f)
-            fig = Figlet(font = config["banner-font"])
+            fig = Figlet(font =config["banner-font"])
             banner_colour = config["banner-color"]   
             break
         except (FileNotFoundError,KeyError):

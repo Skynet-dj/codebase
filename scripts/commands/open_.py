@@ -11,13 +11,13 @@ except (FileNotFoundError, json.JSONDecodeError) as e:
 
 
 def open_project(path: str) -> None:
-    subprocess.check_call(f"{command} {path}", shell=True)
+    subprocess.call(f"{command} {path}", shell=True)
     return
 
 def open_template(path: str) -> None:
-    subprocess.check_call(f"{command} {path}", shell=True)
+    subprocess.call(f"{command} {path}", shell=True)
     return
 
 def open_explorer(path: str, ) -> None:
-    subprocess.check_call(f"explorer {path}", shell=True)
+    subprocess.call(f"explorer {path}", shell=True)
     return
