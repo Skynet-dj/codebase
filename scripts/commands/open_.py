@@ -1,5 +1,5 @@
 import json
-import os
+import subprocess
 from scripts.com_util import CONFIG_FILE, text_editor, text_editor_command
 
 try:
@@ -11,13 +11,13 @@ except (FileNotFoundError, json.JSONDecodeError) as e:
 
 
 def open_project(path: str) -> None:
-    os.system(f"{command} {path}")
+    subprocess.check_call(f"{command} {path}", shell=True)
     return
 
 def open_template(path: str) -> None:
-    os.system(f"{command} {path}")
+    subprocess.check_call(f"{command} {path}", shell=True)
     return
 
-def open_explorer(path: str) -> None:
-    os.system(f"explorer {path}")
+def open_explorer(path: str, ) -> None:
+    subprocess.check_call(f"explorer {path}", shell=True)
     return

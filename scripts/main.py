@@ -9,10 +9,11 @@ while True:
         from scripts.com_util import CONFIG_FILE, COMMANDS_FILE,ar_, tool_name
         from scripts.com_util import banner_color, banner_font
         from scripts.command_handle import command_handle, MissingArgumentError
+        from scripts.commands import open_
         break
     except (ModuleNotFoundError,ImportError,):
         print("Few requirements are not satisfied.")
-        os.system("pip install r scripts/requirements.txt")
+        subprocess.check_call("pip install r scripts/requirements.txt", shell=True)
 
 # Initialize the console from Rich for color
 console = Console()    
@@ -20,7 +21,7 @@ console = Console()
 def display_intro(console_width, current_path):
     """Display the introduction, ASCII art, and current path."""
 
-    os.system("cls" if os.name == "nt" else "clear")    
+    subprocess.check_call("cls" if os.name == "nt" else "clear", shell=True)    
     while True:
         try:
             with open(CONFIG_FILE, "r") as f:
@@ -33,7 +34,7 @@ def display_intro(console_width, current_path):
             banner_colour = banner_color
             break
         except pyfiglet.FontNotFound:
-            os.system(f"python scripts/install_fonts.py")
+            subprocess.check_call(f"python scripts/install_fonts.py", shell=True)
 
     # Generate ASCII art
     ascii_art_lines = fig.renderText(f"{tool_name.upper()}").split("\n")
