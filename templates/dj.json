@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "name_of_template": "python0"
+  },
+  "structure": {
+    "folders": [
+      {
+        "name": "{{ src_folder_name }}",
+        "folders": [],
+        "files": [
+          {
+            "name": "__init__.py",
+            "content": "# Initialization for the {{ project_name }} package"
+          },
+          {
+            "name": "main.py",
+            "content": "def main():\n    print('Welcome to the {{ project_name }} Python package!')\n\nif __name__ == '__main__':\n    main()"
+          },
+          {
+            "name": "module.py",
+            "content": "def do_something():\n    print('This is a function in the {{ project_name }} module!')"
+          }
+        ]
+      },
+      {
+        "name": "{{ tests_folder_name }}",
+        "folders": [],
+        "files": [
+          {
+            "name": "__init__.py",
+            "content": "# Marks the directory as a module for tests"
+          },
+          {
+            "name": "test_module.py",
+            "content": "import pytest\nfrom {{ project_name }}.module import do_something\n\ndef test_do_something():\n    assert do_something() == 'This is a function in the {{ project_name }} module!'"
+          }
+        ]
+      }
+    ],
+    "files": [
+      {
+        "name": ".gitignore",
+        "content": "*.pyc\n__pycache__\n*.pyo\n*.pyd\n.env\n.vscode/\n.idea/"
+      },
+      {
+        "name": "README.md",
+        "content": "# {{ project_name }}\n\n{{ project_description }}\n\n## Installation\n\n```\npip install {{ project_name }}\n```\n\n## Usage\n\n```python\nfrom {{ project_name }} import main\nmain()\n```"
+      },
+      {
+        "name": "setup.py",
+        "content": "from setuptools import setup, find_packages\n\nsetup(\n    name='{{ project_name }}',\n    version='0.1',\n    packages=find_packages(),\n    install_requires=[],\n    entry_points={\n        'console_scripts': [\n            '{{ project_name }} = {{ project_name }}.main:main',\n        ],\n    },\n)\n"
+      },
+      {
+        "name": "requirements.txt",
+        "content": "pytest\n"
+      },
+      {
+        "name": "tox.ini",
+        "content": "[tox]\nenvlist = py38, lint\n\n[testenv]\ndeps = pytest\ncommands = pytest\n\n[testenv:lint]\ndeps = flake8\ncommands = flake8 {{ project_name }} tests"
+      },
+      {
+        "name": "pyproject.toml",
+        "content": "[tool.poetry]\nname = \"{{ project_name }}\"\nversion = \"0.1.0\"\ndescription = \"{{ project_description }}\"\nauthors = [\"{{ author }}\"]\n\n[tool.poetry.dependencies]\npython = \"^3.8\"\n\n[tool.poetry.dev-dependencies]\npytest = \"^6.0\"\n"
+      },
+      {
+        "name": "config.json",
+        "content": "{\n  \"project_name\": \"{{ project_name }}\",\n  \"project_description\": \"{{ project_description }}\",\n  \"author\": \"{{ author }}\",\n  \"year\": \"{{ year }}\"\n}"
+      }
+    ]
+  }
+}

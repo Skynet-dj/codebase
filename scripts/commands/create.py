@@ -96,8 +96,7 @@ def create_project(temp_name, project_name, path: str = "cwd") -> bool:
 
 def create_template(temp_name: str, from_existing: bool=False) -> None :    
     if from_existing:
-        console.print(f"Enter template to use ")
-        temp = console.input(f"{ar_} ")
+        temp = console.input(f"Enter template to use {ar_} ")
         if search_template(temp, want_data=False):
             shutil.copy(f'{TEMPLATE_DIR}/{temp}.json', f'{TEMPLATE_DIR}/{temp_name}.json')
             #open the template in the configured editor 

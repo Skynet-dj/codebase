@@ -11,8 +11,8 @@ def create_config(root_path = False):
         with open(CONFIG_FILE, "x") as f:
             defaults = {
                 "is_setup":False,
-                "text-editor": "Micro",
-                "text-editor-command": "micro",
+                "text-editor": "Notepad",
+                "text-editor-command": "notepad",
                 "root-path": "",
                 "banner-font": "ansi_regular",
                 "banner-color": "red",
@@ -39,6 +39,7 @@ def editor_setup(is_setup):
     editors_available = [
         "Micro",
         "Vim",
+        "Notepad",
         "GNU Nano",
         "GNU Emacs",
         "Visual Studio Code",
@@ -50,6 +51,7 @@ def editor_setup(is_setup):
 
     editor_commands = [
         "micro",
+        "notepad",
         "vim",
         "nano",
         "emacs",

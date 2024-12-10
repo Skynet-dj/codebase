@@ -9,8 +9,8 @@ console = Console()
 tool_name: str = "Codebase"
 ar_ = "[bold red]>>[/bold red]"
 #defaults
-text_editor = "Micro"
-text_editor_command = "micro"
+text_editor = "Notepad"
+text_editor_command = "notepad"
 root_path = ""
 banner_font = "ansi_regular"
 banner_color = "red"

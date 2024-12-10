@@ -65,8 +65,8 @@ def command_handle(passed_command: str):
             raise MissingArgumentError(cmd_name)
 
         if command[1] == "project":
-            template_name = console.input("Template you want to use: ")
-            project_name = console.input("Project Name: ")
+            template_name = console.input(f"Template you want to use {ar_}")
+            project_name = console.input(f"Project Name {ar_} ")
 
             # Determine path to create the project
             path = command[2] if len(command) > 2 else None
@@ -79,8 +79,8 @@ def command_handle(passed_command: str):
                 create.create_project(template_name, project_name)
 
         elif command[1] == "template":
-            template_name = console.input("Template Name: ")
-            from_existing = console.input("Create from existing template? (y/n): ").strip().lower()
+            template_name = console.input(f"Template Name {ar_}")
+            from_existing = console.input(f"Create from existing template? (y/n) {ar_} ").strip().lower()
             if from_existing in ("y", "yes"):
                 create.create_template(template_name, from_existing=True)
             elif from_existing in ("n", "no"):
