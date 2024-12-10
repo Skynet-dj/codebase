@@ -6,7 +6,7 @@ from scripts.com_util import CONFIG_FILE, PROJECTS_FILE, ar_ # Input Arrow (ar_)
 
 console = Console()
 
-def create_config():
+def create_config(root_path = False):
     try:
         with open(CONFIG_FILE, "x") as f:
             defaults = {
@@ -24,6 +24,8 @@ def create_config():
     except FileExistsError:
         with open(CONFIG_FILE, "r") as f:
             data = json.load(f)
+            if root_path:
+                return data["root-path"]
             return data["is_setup"]
 
 
@@ -62,7 +64,7 @@ def editor_setup(is_setup):
     input_ = console.input(f"\nDo you want to use the default editor 'Micro' (y/n) {ar_} ")
     if input_.lower() in ["y", "yes"]:
         save_to_json({"text-editor": "Micro", "text-editor-command": "micro"})
-        console.print(f"\n[bold yellow]Selected Editor: Micro [/bold yellow]")
+        console.print(f"[bold yellow]Selected Editor: Micro [/bold yellow]")
         return
 
     table = Table(show_header=True, style="bold cyan")
@@ -88,18 +90,19 @@ def editor_setup(is_setup):
     if editor_index <= len(editor_commands):
         config["text-editor-command"] = editor_commands[editor_index - 1]
     else:  # For "Other"
-        editor = console.input(f"Editor that you want to use {ar_} ")
+        editor = console.input(f"\nEditor that you want to use {ar_} ")
         command = console.input(f"CMD command to start the editor {ar_} ")
         config["text-editor"] = editor
         config["text-editor-command"] = command
 
-    save_to_json(config)
+    
     console.print(f"\n[bold yellow]Selected Editor: {config['text-editor']} [/bold yellow]")
+    return config
 
 
-def root_path_setup(is_setup):
-    if is_setup:
-        console.print("\nDefault 'root path' is already configured by you.")
+def root_path_setup(root_path):
+    if root_path:
+        console.print(f"\nDefault 'root path' is already configured by you, Root-Path --> {root_path}")
         input_ = console.input(f"Do you still want to proceed? (y/n) {ar_} ")
         if input_.lower() in ["n", "no"]:
             return
@@ -108,14 +111,15 @@ def root_path_setup(is_setup):
     console.print("By default projects when created will be stored in the 'Current Directory'.")
 
     while True:
-        input_ = console.input(f"Enter absolute path for the 'root' directory {ar_} ").replace("\\", "/")
+        input_ = console.input(f"Enter absolute path for the 'root' directory (blank to skip){ar_} ").replace("\\", "/")
         if os.path.exists(input_):
             config = {"root-path": input_.replace("/","\\")}
-            save_to_json(config)
             console.print(f"\n[bold yellow]Root Directory: {input_} [/bold yellow]")
-            break
+            return config
+        elif not input_:
+            return
         else:
-            console.print("[bold red]The entered 'path' does not exist. Please try again.[/bold red]")
+            console.print("\n[bold red]The entered 'path' does not exist. Please try again.[/bold red]")
 
 
 def save_to_json(config):
@@ -132,16 +136,21 @@ def save_to_json(config):
 
 
 try:
+    console.print(f"\n[bold cyan]Welcome to SETUP[/bold cyan]")
     is_setup = create_config()
-    editor_setup(is_setup)
-    root_path_setup(is_setup)
+    config1 = editor_setup(is_setup)
+    root_path = create_config(True)
+    config2 = root_path_setup(root_path)
+
+    save_to_json(config1)
+    save_to_json(config2)
     save_to_json({"is_setup": True})
 
     config_json = "\\".join((os.path.abspath(__file__).split("\\")[:-3] + ["data", "config.json"]))
-    console.print(f"To config other variables refer to [magenta]{config_json}[/magenta]")
+    console.print(f"\nTo config other variables refer to [magenta]{config_json}[/magenta]")
     console.print(f"[bold yellow]SETUP COMPLETE[/bold yellow]")
 except KeyboardInterrupt:
-    console.print(f"\n[bold red]Setup Canceled![/bold red]")
+    console.print(f"\n\n[bold red]Setup Canceled! The changes won't be added![/bold red]")
 
 
 

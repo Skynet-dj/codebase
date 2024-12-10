@@ -23,6 +23,30 @@ except (FileNotFoundError, json.decoder.JSONDecodeError):
     projects = {}
 
 
+def search_template(temp_name: str, want_data: bool=True):
+    if ".json" not in temp_name:
+        temp_name = temp_name + ".json"
+
+    template_file = os.path.join(TEMPLATE_DIR, f"{temp_name}")
+    if not os.path.exists(template_file):
+        console.print(f"\n[bold red]Template '[bold yellow]{temp_name}[/bold yellow]' not found.[/bold red]")
+        console.print("Use 'list template' to see existing templates")
+        return
+
+    # Loading template data
+    try:
+        with open(template_file, 'r') as f:
+            if want_data:
+                return json.load(f)
+            return True
+    except json.JSONDecodeError as e:
+        console.print(f"\n[bold red]Error: [/bold red]{e}")
+        console.print(f"The template seems corrupted...")
+        console.print(f"Deleting the template...")
+        os.remove(f"{TEMPLATE_DIR}/{temp_name}")
+        console.print(f"[yellow]Template deleted successfully.[/yellow]")
+        return
+    
 def project_exists(path: str, projects=projects) -> bool:
     if not projects:
         return False
