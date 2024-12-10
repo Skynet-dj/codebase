@@ -2,13 +2,13 @@ import os
 import json
 import subprocess
 from rich.console import Console
-from scripts.com_util import CONFIG_FILE, COMMANDS_FILE,ar_, tool_name
+from scripts.com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
 from scripts.com_util import search_template, search_project
 from scripts.commands import create, list_, open_, rm
 
 console = Console()
-MissingArgumentError = type(f"MissingArgumentError:", (Exception,), {})
 
+MissingArgumentError = type(f"MissingArgumentError:", (Exception,), {})
 
 def command_handle(passed_command: str):
     # Load commands and configuration
@@ -16,40 +16,35 @@ def command_handle(passed_command: str):
         with open(COMMANDS_FILE, "r") as c:
             all_commands = json.load(c)
     except FileNotFoundError:
-        console.print(f"[bold red]Error: {COMMANDS_FILE} not found.[/ bold red]")
+        console.print(f"[bold red]Error: {COMMANDS_FILE} not found.[/bold red]")
         console.print(f"Try reinstalling the package with 'pip install {tool_name}'")
         return
-    
-    #----------------------------------------------------------------------
-    tokenised_command = []
-    command = []
-    flags = []
 
+    # Tokenize the command and flags
     tokenised_command = passed_command.split()
     command = [token for token in tokenised_command if "-" not in token]
+    flags = [token for token in tokenised_command if "-" in token]
 
+    # Validate command length
     if len(command) > 3:
         console.print(f"[bold red]Error: more arguments than required[/bold red]")
         return
 
-    flags = [token for token in tokenised_command if "-" in token]
-    for flag in flags:
-        flag = flag.strip()
-        if flag not in ("-r","-p","-e","-E","s"):
-            flags.pop(flag)
+    # Validate flags
+    valid_flags = ["-r", "-p", "-e", "-E", "s"]
+    flags = [flag.strip() for flag in flags if flag in valid_flags]
 
-    no_of_command = 0
-    for com in command:
-        if com in all_commands:
-            no_of_command += 1
-    
-    if no_of_command > 1 and not command[0] == "help":
-        console.print(f"[bold red][InvalidArgumentError]: argument for command <{command[0]}> [/bold red]")
-        return
-    if "-e" and "-E" in flags:
+    # Check if both '-e' and '-E' flags are present
+    if "-e" in flags and "-E" in flags:
         console.print(f"[bold red][FlagError]: Cannot have both <-e> and <-E> as flags[/bold red]")
         return
 
+    # Check if more than one command is passed (other than 'help')
+    if len(command) > 1 and command[0] != "help" and command[0] not in all_commands:
+        console.print(f"[bold red][InvalidArgumentError]: Invalid command argument <{command[0]}>[/bold red]")
+        return
+
+    # Try to load the config file to get root-path
     try:
         with open(CONFIG_FILE, "r") as f:
             root_path = json.load(f).get("root-path", None)
@@ -82,7 +77,7 @@ def command_handle(passed_command: str):
                 create.create_project(template_name, project_name)
 
         elif command[1] == "template":
-            template_name = console.input(f"Template Name {ar_} ")
+            template_name = console.input(f"Template Name {ar_}")
             from_existing = console.input(f"Create from existing template? (y/n) {ar_} ").strip().lower()
             if from_existing in ("y", "yes"):
                 create.create_template(template_name, from_existing=True)
@@ -90,7 +85,6 @@ def command_handle(passed_command: str):
                 create.create_template(template_name, from_existing=False)
             else:
                 console.print(f"[red]Error: Invalid input '{from_existing}'. Expected 'y' or 'n'.[/red]")
-            
 
     # Command: rm
     elif cmd_name == "rm":
@@ -105,7 +99,7 @@ def command_handle(passed_command: str):
                 return
             confirm = "-n" in flags or console.input(f"Sure? (y/n): ").lower() in ("y", "yes")
             if confirm:
-                rm.rm_project(path)
+                rm.rm_project(path,name)
         elif target == "template":
             path = search_template(name, False, True)
             if not path:
@@ -118,14 +112,14 @@ def command_handle(passed_command: str):
     elif cmd_name == "open":
         if len(command) < 3:
             raise MissingArgumentError(cmd_name)
-        target = command[1]    
+        target = command[1]
         name = command[2]
 
-        if target == "project":      
-            path = search_project(name,True)
+        if target == "project":
+            path = search_project(name, True)
             if not path:
                 return
-    
+
             if "-e" in flags:
                 open_.open_project(name)
                 open_.open_explorer(path)
@@ -139,7 +133,6 @@ def command_handle(passed_command: str):
             if path:
                 open_.open_template(path)
                 return
-
 
     # Command: list
     elif cmd_name == "list":
@@ -167,11 +160,11 @@ def command_handle(passed_command: str):
             console.print(f"[bold cyan]Usage[/bold cyan]: {details['usage']}")
             console.print(f"[bold cyan]Example[/bold cyan]: {details['example']}")
             if "flags" in details:
-                console.print(f"[bold cyan]Flags[/bold cyan]: ", end = "")
-                for i,flag in enumerate(details['flags']):
+                console.print(f"[bold cyan]Flags[/bold cyan]: ", end="")
+                for i, flag in enumerate(details['flags']):
                     flag_ = flag.split("(")[:-1]
-                    flag_desc = "("+flag.split("(")[-1]             
-                    console.print(f"{"       "*i}[bold magenta]{' '.join(flag_)}[/bold magenta] {flag_desc}")
+                    flag_desc = "(" + flag.split("(")[-1]
+                    console.print(f"{'       '*i}[bold magenta]{' '.join(flag_)}[/bold magenta] {flag_desc}")
 
     # Command: setup
     elif cmd_name == "setup":
@@ -179,5 +172,4 @@ def command_handle(passed_command: str):
     elif cmd_name == "exit":
         raise KeyboardInterrupt
     else:
-        console.print(f"[bod red]Error: Command '{cmd_name}' not recognized.[/bold red]")
-    
+        console.print(f"[bold red]Error: Command '{cmd_name}' not recognized.[/bold red]")

@@ -9,89 +9,48 @@ import shutil
 console = Console()
     
 def create_project(temp_name, project_name, path: str = "cwd") -> bool:
+    # Load template data (updated with static values)
     temp_data = search_template(temp_name)
-    if not temp_name:
-        return 
-    
-    
-    # Collect required variables for placeholders in the template
-    variables = {}
-    placeholders = set()
+    if not temp_data:
+        console.print(f"[bold red]Template '{temp_name}' not found.[/bold red]")
+        return False
 
-    # Recursively check folders and files for placeholders
-    def find_placeholders(structure):
-        if isinstance(structure, dict):
-            for key, value in structure.items():
-                if isinstance(value, str):
-                    # Check for placeholders in strings ({{}})
-                    if '{{' in value and '}}' in value:
-                        placeholders.add(value.strip("{}").strip())
-                # Recursively check folders and files
-                elif isinstance(value, (dict, list)):
-                    find_placeholders(value)
-        elif isinstance(structure, list):
-            for item in structure:
-                find_placeholders(item)
-
-    # Find placeholders in the template structure
-    find_placeholders(temp_data)
-
-    # Prompt for each placeholder if not already in variables
-    for placeholder in placeholders:
-        if placeholder not in variables:
-            value = console.input(f"[bold green]Enter value for {placeholder.replace('_', ' ')}: [/bold green]").strip()
-            variables[placeholder] = value if value else f"{{{{ {placeholder} }}}}"
-
-    # Recursive function to replace placeholders in content
-    def replace_placeholders(content, variables):
-        for placeholder, value in variables.items():
-            content = content.replace(f"{{{{ {placeholder} }}}}", value)
-        return content
-
-    # Function to create project structure
+    # Function to create project structure based on the JSON template
     def create_files_from_structure(structure, base_path):
         try:
-            # Replace variables in the current structure
-            if isinstance(structure, dict):
-                structure = {key: replace_placeholders(value, variables) if isinstance(value, str) else value
-                             for key, value in structure.items()}
-
             # Create subfolders
-            for item in structure.get("folders", []):
-                if isinstance(item, dict):  # Ensure item is a dictionary
-                    folder_path = os.path.join(base_path, item["name"])
+            for folder in structure.get("folders", []):
+                if isinstance(folder, dict):  # Ensure each folder is a dictionary
+                    folder_path = os.path.join(base_path, folder["name"])
                     os.makedirs(folder_path, exist_ok=True)
-                    create_files_from_structure(item, folder_path)
+                    create_files_from_structure(folder, folder_path)
 
             # Create files
             for file in structure.get("files", []):
                 file_path = os.path.join(base_path, file["name"])
                 os.makedirs(os.path.dirname(file_path), exist_ok=True)  # Ensure parent directories exist
                 with open(file_path, 'w') as f:
-                    content = file.get("content", "")
-                    f.write(replace_placeholders(content, variables))  # Replace content variables
+                    f.write(file.get("content", ""))  # Write file content
 
-        except ValueError as e:
-            console.print(f"[bold red]{e}[/bold red]")
-            console.print(f"Would you like to edit the template (else delete it)? (y/n)")
-            input_ = console.input(f"{ar_}")
-            if input_.lower() == ("y" or "yes"):
-                console.print("Try creating the project again.")
-                return
-            console.print(f"Deleting the template...")
-            os.remove(f"{TEMPLATE_DIR}/{temp_name}")
-            os.remove(f"{folder_path}")
-            console.print(f"[yellow]Template deleted successfully.[/yellow]")
-            return
+        except Exception as e:
+            console.print(f"[bold red]Error creating structure: {e}[/bold red]")
+            return False
 
-    folder_path = os.path.join(path, project_name.replace(" ", "_"))
-    os.makedirs(folder_path, exist_ok=False)
+    # Set the project folder path
+    folder_path = os.path.join(os.path.abspath(path), project_name.replace(" ", "_"))
 
-    create_files_from_structure(temp_data["structure"], folder_path)
-
-    update_project(folder_path, project_name)
-    console.print(f"[bold yellow]Project created successfully.[/bold yellow]")
-    return True
+    try:
+        os.makedirs(folder_path, exist_ok=False)  # Ensure the project folder is created
+        create_files_from_structure(temp_data["structure"], folder_path)  # Create the project structure
+        update_project(folder_path, project_name)  # Update project record
+        console.print(f"[bold yellow]Project '{project_name}' created successfully.[/bold yellow]")
+        return True
+    except FileExistsError:
+        console.print(f"[bold red]Project '{project_name}' already exists.[/bold red]")
+        return False
+    except Exception as e:
+        console.print(f"[bold red]Error: {e}[/bold red]")
+        return False
 
 
 def create_template(temp_name: str, from_existing: bool=False) -> None :    
