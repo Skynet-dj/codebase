@@ -20,8 +20,8 @@
     "open":
     {
         "description": "Open a project/template in the default editor",
-        "parameters":["project","template"],
-        "usage": "open project/template project/template_name <flags>",
+        "parameters":["project","template","config"],
+        "usage": "open project/template/config project/template_name <flags>",
         "example": "open project python-cli -e",
         "flags": ["-e (To open with explorer)"," -E (To open only in exlporer)"]
     },

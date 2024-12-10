@@ -2,7 +2,7 @@ import os
 import json
 from rich.console import Console
 from rich.table import Table
-from scripts.com_util import CONFIG_FILE, PROJECTS_FILE,tool_name, ar_,text_editor
+from codebase.scripts.com_util import CONFIG_FILE, PROJECTS_FILE, ar_,text_editor
 
 console = Console()
 
@@ -37,9 +37,9 @@ def editor_setup(is_setup):
             return
 
     editors_available = [
-        "Micro",
-        "Vim",
+        "Pyvim",
         "Notepad",
+        "Vim",
         "GNU Nano",
         "GNU Emacs",
         "Visual Studio Code",
@@ -50,7 +50,7 @@ def editor_setup(is_setup):
     ]
 
     editor_commands = [
-        "micro",
+        "pyvim"
         "notepad",
         "vim",
         "nano",

@@ -1,19 +1,13 @@
 import os
 import json
 import subprocess
-while True:
-    try:
-        from pyfiglet import Figlet
-        import pyfiglet
-        from rich.console import Console
-        from scripts.com_util import CONFIG_FILE, COMMANDS_FILE,ar_, tool_name
-        from scripts.com_util import banner_color, banner_font
-        from scripts.command_handle import command_handle, MissingArgumentError
-        from scripts.commands import open_
-        break
-    except (ModuleNotFoundError,ImportError,):
-        print("Few requirements are not satisfied.")
-        subprocess.call("pip install r scripts/requirements.txt", shell=True)
+from pyfiglet import Figlet
+import pyfiglet
+from rich.console import Console
+from codebase.scripts.com_util import CONFIG_FILE, ar_, tool_name
+from codebase.scripts.com_util import banner_color, banner_font
+from codebase.scripts.command_handle import command_handle, MissingArgumentError
+  
 
 # Initialize the console from Rich for color
 console = Console()    
@@ -34,7 +28,7 @@ def display_intro(console_width, current_path):
             banner_colour = banner_color
             break
         except pyfiglet.FontNotFound:
-            subprocess.call(f"python scripts/install_fonts.py", shell=True)
+            subprocess.call(f"python codebase/scripts/install_fonts.py", shell=True)
 
     # Generate ASCII art
     ascii_art_lines = fig.renderText(f"{tool_name.upper()}").split("\n")
@@ -99,8 +93,8 @@ try:
         except (MissingArgumentError) as e:
             console.print(f"[bold red]MissingArgumentError: Missing argument for '{e}'[/bold red]")
             command_handle(f"help {e}")
+            print()
         except(subprocess.CalledProcessError) as e:
             console.print(f"[bold red]{e}[/bold red]")
-        print()
 except KeyboardInterrupt:
     console.print(f"[bold yellow]Exiting the program...[/bold yellow]")

@@ -1,7 +1,8 @@
 import os
-from scripts.com_util import Table, console, projects, TEMPLATE_DIR
+from codebase.scripts.com_util import Table, console, load_projects, TEMPLATE_DIR
 
 def list_projects(flags=None):
+    projects = load_projects()
     table = Table(show_header=True, header_style="magenta")
     table.add_column("Project_Name")
 

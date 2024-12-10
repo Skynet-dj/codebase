@@ -1,14 +1,15 @@
 import os
 import json
 from rich.console import Console
-from scripts.commands.list_ import list_templates
-from scripts.com_util import project_exists, update_project, TEMPLATE_DIR, ar_, search_template
-from scripts.commands.open_ import open_template
+from codebase.scripts.commands.list_ import list_templates
+from codebase.scripts.com_util import project_exists, update_project, TEMPLATE_DIR, ar_, search_template
+from codebase.scripts.commands.open_ import open_template
 import shutil
 
 console = Console()
     
 def create_project(temp_name, project_name, path = os.getcwd()) -> bool:
+    print(path)
     temp_data = search_template(temp_name)
     if not temp_data:
         return 

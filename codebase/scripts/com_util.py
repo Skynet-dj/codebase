@@ -9,26 +9,25 @@ console = Console()
 tool_name: str = "Codebase"
 ar_ = "[bold red]>>[/bold red]"
 #defaults
-text_editor = "Notepad"
-text_editor_command = "notepad"
+text_editor = "pyvim"
+text_editor_command = "pyvim"
 root_path = ""
 banner_font = "ansi_regular"
 banner_color = "red"
+CONFIG_FILE = "codebase/data/config.json"
+PROJECTS_FILE = "codebase/data/projects.json"
+TEMPLATE_DIR = "codebase/templates"
+COMMANDS_FILE = "codebase/data/commands.json"
+FONT_DIR = "codebase/fonts"
 
-CONFIG_FILE = "data/config.json"
-PROJECTS_FILE = "data/projects.json"
-TEMPLATE_DIR = "templates"
-COMMANDS_FILE = "data/commands.json"
-FONT_DIR = "fonts"
-
-
-try:
-    with open(PROJECTS_FILE, "r") as p:
-        projects = json.load(p)
-except (FileNotFoundError, json.decoder.JSONDecodeError):
-    with open(PROJECTS_FILE, "w") as p:
-        json.dump({}, p, indent=4)
-    projects = {}
+def load_projects():
+    try:
+        with open(PROJECTS_FILE, "r") as p:
+            return json.load(p)
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
+        with open(PROJECTS_FILE, "w") as p:
+            json.dump({}, p, indent=4)
+        return {}
 
 def search_template(temp_name: str, want_data: bool=True, temp_path: bool=False):
     if ".json" not in temp_name:
@@ -55,7 +54,7 @@ def search_template(temp_name: str, want_data: bool=True, temp_path: bool=False)
         console.print(f"[yellow]Template deleted successfully.[/yellow]")
         return
 
-def search_project(project_name: str, ask_if_multiple: bool = False, projects=projects):
+def search_project(project_name: str, ask_if_multiple: bool = False, projects=load_projects()):
     if project_name not in projects:
         console.print(f"[bold red]Project '{project_name}' does not exist.[/bold red]")
         console.print(f"Use 'list projects' to see existng tempaltes")
@@ -71,7 +70,7 @@ def search_project(project_name: str, ask_if_multiple: bool = False, projects=pr
         return project_paths[index-1]
     return project_paths[0]
 
-def project_exists(path: str, projects=projects) -> bool:
+def project_exists(path: str, projects=load_projects()) -> bool:
     if not projects:
         return False
     def search_in_structure(structure):
@@ -85,7 +84,7 @@ def project_exists(path: str, projects=projects) -> bool:
     return search_in_structure(projects)
 
 
-def update_project(path: str, project_name: str, project_should_exist = False, projects=projects):    
+def update_project(path: str, project_name: str, project_should_exist = False, projects=load_projects()):    
     if project_name not in projects.keys() :
         projects[project_name] = []
 

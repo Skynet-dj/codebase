@@ -1,5 +1,5 @@
 import os
-from scripts.com_util import update_project
+from codebase.scripts.com_util import update_project
 
 def rm_project(path, name) -> None:
     update_project(path, name,True)

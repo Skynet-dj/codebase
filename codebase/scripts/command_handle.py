@@ -2,9 +2,9 @@ import os
 import json
 import subprocess
 from rich.console import Console
-from scripts.com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
-from scripts.com_util import search_template, search_project
-from scripts.commands import create, list_, open_, rm
+from codebase.scripts.com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
+from codebase.scripts.com_util import search_template, search_project, root_path
+from codebase.scripts.commands import create, list_, open_, rm
 
 console = Console()
 
@@ -12,49 +12,32 @@ MissingArgumentError = type(f"MissingArgumentError:", (Exception,), {})
 
 def command_handle(passed_command: str):
     # Load commands and configuration
-    try:
-        with open(COMMANDS_FILE, "r") as c:
-            all_commands = json.load(c)
-    except FileNotFoundError:
-        console.print(f"[bold red]Error: {COMMANDS_FILE} not found.[/bold red]")
-        console.print(f"Try reinstalling the package with 'pip install {tool_name}'")
-        return
-
+    def load_command():
+        try:
+            with open(COMMANDS_FILE, "r") as c:
+                return json.load(c)
+        except FileNotFoundError:
+            console.print(f"[bold red]Error: {COMMANDS_FILE} not found.[/bold red]")
+            console.print(f"Try reinstalling the package with 'pip install {tool_name}'")
+            return
+    all_commands = load_command()
+    
     # Tokenize the command and flags
     tokenised_command = passed_command.split()
     command = [token for token in tokenised_command if "-" not in token]
     flags = [token for token in tokenised_command if "-" in token]
 
-    # Validate command length
-    if len(command) > 3:
-        console.print(f"[bold red]Error: more arguments than required[/bold red]")
+    # Validate the command list
+    if not command:
+        console.print("[bold red]Error: No command provided![/bold red]")
         return
 
-    # Validate flags
-    valid_flags = ["-r", "-p", "-e", "-E", "s"]
-    flags = [flag.strip() for flag in flags if flag in valid_flags]
-
-    # Check if both '-e' and '-E' flags are present
-    if "-e" in flags and "-E" in flags:
-        console.print(f"[bold red][FlagError]: Cannot have both <-e> and <-E> as flags[/bold red]")
-        return
-
-    # Check if more than one command is passed (other than 'help')
-    if len(command) > 1 and command[0] != "help" and command[0] not in all_commands:
-        console.print(f"[bold red][InvalidArgumentError]: Invalid command argument <{command[0]}>[/bold red]")
-        return
-
-    # Try to load the config file to get root-path
-    try:
-        with open(CONFIG_FILE, "r") as f:
-            root_path = json.load(f).get("root-path", None)
-    except FileNotFoundError:
-        root_path = None
-
-    if not command or command[0] not in all_commands:
+    # Validate against known commands
+    if command[0] not in all_commands:
         subprocess.call(passed_command, shell=True)
         return
 
+    # Process recognized commands
     cmd_name = command[0]
 
     # Command: create
@@ -63,14 +46,13 @@ def command_handle(passed_command: str):
             raise MissingArgumentError(cmd_name)
 
         if command[1] == "project":
-            template_name = console.input(f"Template you want to use {ar_}")
+            template_name = console.input(f"Template you want to use {ar_} ")
             project_name = console.input(f"Project Name {ar_} ")
 
             # Determine path to create the project
             path = command[2] if len(command) > 2 else None
             if "-r" in flags and root_path:
                 path = root_path
-
             if path:
                 create.create_project(template_name, project_name, path)
             else:
@@ -110,6 +92,9 @@ def command_handle(passed_command: str):
 
     # Command: open
     elif cmd_name == "open":
+        if command[1] == "config":
+            open_.open_project(f"{CONFIG_FILE}")
+            return
         if len(command) < 3:
             raise MissingArgumentError(cmd_name)
         target = command[1]
@@ -125,7 +110,7 @@ def command_handle(passed_command: str):
                 open_.open_explorer(path)
                 return
             open_.open_project(path)
-            
+
         elif target == "template":
             path = search_template(name, False, True)
             if path:
@@ -166,7 +151,7 @@ def command_handle(passed_command: str):
 
     # Command: setup
     elif cmd_name == "setup":
-        os.system("python scripts/commands/setup.py")
+        os.system("python codebase/scripts/commands/setup.py")
     elif cmd_name == "exit":
         raise KeyboardInterrupt
     else:
