@@ -2,7 +2,7 @@ import os
 import json
 from rich.console import Console
 from rich.table import Table
-from scripts.com_util import CONFIG_FILE, PROJECTS_FILE,tool_name, ar_ # Input Arrow (ar_)
+from scripts.com_util import CONFIG_FILE, PROJECTS_FILE,tool_name, ar_,text_editor
 
 console = Console()
 
@@ -63,7 +63,7 @@ def editor_setup(is_setup):
 
     config = {"text-editor": "", "text-editor-command": ""}
 
-    input_ = console.input(f"\nDo you want to use the default editor 'Micro' (y/n) {ar_} ")
+    input_ = console.input(f"\nDo you want to use the default editor '{text_editor}' (y/n) {ar_} ")
     if input_.lower() in ["y", "yes"]:
         console.print(f"[bold yellow]Selected Editor: Micro [/bold yellow]")
         return  {"text-editor": "Micro", "text-editor-command": "micro"}

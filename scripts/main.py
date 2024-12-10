@@ -13,7 +13,7 @@ while True:
         break
     except (ModuleNotFoundError,ImportError,):
         print("Few requirements are not satisfied.")
-        subprocess.check_call("pip install r scripts/requirements.txt", shell=True)
+        subprocess.call("pip install r scripts/requirements.txt", shell=True)
 
 # Initialize the console from Rich for color
 console = Console()    
@@ -21,7 +21,7 @@ console = Console()
 def display_intro(console_width, current_path):
     """Display the introduction, ASCII art, and current path."""
 
-    subprocess.check_call("cls" if os.name == "nt" else "clear", shell=True)    
+    subprocess.call("cls" if os.name == "nt" else "clear", shell=True)    
     while True:
         try:
             with open(CONFIG_FILE, "r") as f:
@@ -34,7 +34,7 @@ def display_intro(console_width, current_path):
             banner_colour = banner_color
             break
         except pyfiglet.FontNotFound:
-            subprocess.check_call(f"python scripts/install_fonts.py", shell=True)
+            subprocess.call(f"python scripts/install_fonts.py", shell=True)
 
     # Generate ASCII art
     ascii_art_lines = fig.renderText(f"{tool_name.upper()}").split("\n")

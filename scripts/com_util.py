@@ -30,7 +30,6 @@ except (FileNotFoundError, json.decoder.JSONDecodeError):
         json.dump({}, p, indent=4)
     projects = {}
 
-
 def search_template(temp_name: str, want_data: bool=True, temp_path: bool=False):
     if ".json" not in temp_name:
         temp_name = temp_name + ".json"
@@ -61,16 +60,16 @@ def search_project(project_name: str, ask_if_multiple: bool = False, projects=pr
         console.print(f"[bold red]Project '{project_name}' does not exist.[/bold red]")
         console.print(f"Use 'list projects' to see existng tempaltes")
         return 
-    projects =  projects[project_name]  
+    project_paths =  projects[project_name]  
     if not ask_if_multiple:
-        return projects
-    
-    if len(projects) > 1:
+        return project_paths    
+    if len(project_paths) > 1:
         console.print(f"Projects with name '{project_name}':")
-        for i,project in enumerate(projects, start=1):
+        for i,project in enumerate(project_paths, start=1):
             print(f"{i}: {project}")
         index = int(console.input(f"Index {ar_}"))
-        return projects[index-1]
+        return project_paths[index-1]
+    return project_paths[0]
 
 def project_exists(path: str, projects=projects) -> bool:
     if not projects:

@@ -52,7 +52,7 @@ def command_handle(passed_command: str):
         root_path = None
 
     if not command or command[0] not in all_commands:
-        subprocess.check_call(passed_command, shell=True)
+        subprocess.call(passed_command, shell=True)
         return
 
     cmd_name = command[0]
@@ -119,15 +119,13 @@ def command_handle(passed_command: str):
             path = search_project(name, True)
             if not path:
                 return
-
-            if "-e" in flags:
-                open_.open_project(name)
+            if "-e" in flags:                
                 open_.open_explorer(path)
-                return
             elif "-E" in flags:
                 open_.open_explorer(path)
                 return
-
+            open_.open_project(path)
+            
         elif target == "template":
             path = search_template(name, False, True)
             if path:
@@ -164,7 +162,7 @@ def command_handle(passed_command: str):
                 for i, flag in enumerate(details['flags']):
                     flag_ = flag.split("(")[:-1]
                     flag_desc = "(" + flag.split("(")[-1]
-                    console.print(f"{'       '*i}[bold magenta]{' '.join(flag_)}[/bold magenta] {flag_desc}")
+                    console.print(f"{'      '*i}[bold magenta]{' '.join(flag_)}[/bold magenta] {flag_desc}")
 
     # Command: setup
     elif cmd_name == "setup":
