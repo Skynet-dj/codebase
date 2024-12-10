@@ -21,14 +21,18 @@ def command_handle(passed_command: str):
         return
     
     #----------------------------------------------------------------------
+    tokenised_command = []
+    command = []
+    flags = []
+
     tokenised_command = passed_command.split()
-    command: list = [token for token in tokenised_command if "-" not in token]
+    command = [token for token in tokenised_command if "-" not in token]
 
     if len(command) > 3:
         console.print(f"[bold red]Error: more arguments than required[/bold red]")
         return
 
-    flags: list = [token for token in tokenised_command if "-" in token]
+    flags = [token for token in tokenised_command if "-" in token]
     for flag in flags:
         flag = flag.strip()
         if flag not in ("-r","-p","-e","-E","s"):
@@ -57,7 +61,6 @@ def command_handle(passed_command: str):
         return
 
     cmd_name = command[0]
-    index = 1 #used when projects with same name occur
 
     # Command: create
     if cmd_name == "create":
@@ -135,6 +138,7 @@ def command_handle(passed_command: str):
             path = search_template(name, False, True)
             if path:
                 open_.open_template(path)
+                return
 
 
     # Command: list
