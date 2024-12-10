@@ -4,9 +4,16 @@ setup(
     name="codebase", 
     version="1.0.0",  
     packages=find_packages(), 
+    package_data={
+    'codebase': [
+        'data/commands.json',
+        'fonts/ansi_regular.flf',
+        'fonts/bloody.flf',
+        ],
+    },
     entry_points={
         "console_scripts": [
-            "codebase=codebase.scripts:main",  # Replace with your entry point
+            "codebase=codebase.scripts.main",  # Replace with your entry point
         ],
     },
     install_requires=[
