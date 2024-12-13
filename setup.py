@@ -1,29 +1,23 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="codebase",
-    version="1.0.0",
-    author="DJ",
-    author_email="dibyajyotid2024@gmail.com",
-    description="A simple example package",
-    long_description="",  # You can load a long description from a file like README.md
-    long_description_content_type="",
-    url="https://github.com/username/my_package",
-    packages=find_packages(),
-    install_requires=[
-        "rich",
-        "pyfiglet",
-    ],
-    extras_require={},
-    entry_points={
-        'console_scripts': [
-            'codebase=__main__:main',  # Entry point for a CLI tool
+    name="codebase", 
+    version="1.0.0",  
+    packages=find_packages(), 
+    package_data={
+    'codebase': [
+        'data/commands.json',
+        'fonts/ansi_regular.flf',
+        'fonts/bloody.flf',
         ],
     },
-    python_requires='>=3.6',
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+    entry_points={
+        "console_scripts": [
+            "codebase=codebase.scripts.main",  # Replace with your entry point
+        ],
+    },
+    install_requires=[
+        "rich","pyvim","pyfiglet"
     ],
+    python_requires=">=3.6",  # Minimum Python version
 )

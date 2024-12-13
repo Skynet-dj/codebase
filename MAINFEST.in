@@ -1,0 +1,3 @@
+include codebase/data/commands.json
+include codebase/fonts/ansi_regular.flf
+include codebase/fonts/bloody.flf
