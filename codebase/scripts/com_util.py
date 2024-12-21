@@ -9,7 +9,7 @@ console = Console()
 tool_name: str = "Codebase"
 ar_ = "[bold red]>>[/bold red]"
 #defaults
-text_editor = "pyvim"
+text_editor = "Pyvim"
 text_editor_command = "pyvim"
 root_path = ""
 banner_font = "ansi_regular"

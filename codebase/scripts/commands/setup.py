@@ -2,7 +2,7 @@ import os
 import json
 from rich.console import Console
 from rich.table import Table
-from codebase.scripts.com_util import CONFIG_FILE, PROJECTS_FILE, ar_,text_editor
+from codebase.scripts.com_util import CONFIG_FILE, PROJECTS_FILE, ar_,text_editor, text_editor_command
 
 console = Console()
 
@@ -11,8 +11,6 @@ def create_config(root_path = False):
         with open(CONFIG_FILE, "x") as f:
             defaults = {
                 "is_setup":False,
-                "text-editor": "Notepad",
-                "text-editor-command": "notepad",
                 "root-path": "",
                 "banner-font": "ansi_regular",
                 "banner-color": "red",
@@ -50,7 +48,7 @@ def editor_setup(is_setup):
     ]
 
     editor_commands = [
-        "pyvim"
+        "pyvim",
         "notepad",
         "vim",
         "nano",
@@ -65,8 +63,8 @@ def editor_setup(is_setup):
 
     input_ = console.input(f"\nDo you want to use the default editor '{text_editor}' (y/n) {ar_} ")
     if input_.lower() in ["y", "yes"]:
-        console.print(f"[bold yellow]Selected Editor: Micro [/bold yellow]")
-        return  {"text-editor": "Micro", "text-editor-command": "micro"}
+        console.print(f"[bold yellow]Selected Editor: {text_editor} [/bold yellow]")
+        return  {"text-editor": f"{text_editor}", "text-editor-command": f"{text_editor_command}"}
 
     table = Table(show_header=True, style="bold cyan")
     table.add_column("Editors", style="bold red")

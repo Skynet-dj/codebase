@@ -33,7 +33,7 @@ def command_handle(passed_command: str):
         return
     
 
-    # Validate against known commands
+    # Validate for known commands
     if command[0] not in all_commands :
         subprocess.run(passed_command, shell=True)
         return
@@ -93,11 +93,13 @@ def command_handle(passed_command: str):
 
     # Command: open
     elif cmd_name == "open":
-        if command[1] == "config":
-            open_.open_project(f"{CONFIG_FILE}")
-            return
+        print(len(command), "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
         if len(command) < 3:
             raise MissingArgumentError(cmd_name)
+        '''if command[1] == "config":
+            open_.open_project(f"{CONFIG_FILE}")
+            return'''
+
         target = command[1]
         name = command[2]
 
