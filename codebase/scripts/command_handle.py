@@ -93,12 +93,12 @@ def command_handle(passed_command: str):
 
     # Command: open
     elif cmd_name == "open":
-        print(len(command), "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
+        print(len(command))s
         if len(command) < 3:
             raise MissingArgumentError(cmd_name)
-        '''if command[1] == "config":
+        if command[1] == "config":
             open_.open_project(f"{CONFIG_FILE}")
-            return'''
+            return
 
         target = command[1]
         name = command[2]
