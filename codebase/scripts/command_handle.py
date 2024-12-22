@@ -2,9 +2,9 @@ import os
 import json
 import subprocess
 from rich.console import Console
-from codebase.scripts.com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
-from codebase.scripts.com_util import search_template, search_project, root_path
-from codebase.scripts.commands import create, list_, open_, rm, see
+from com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
+from com_util import search_template, search_project, root_path
+from commands import create, list_, open_, rm, see
 
 console = Console()
 

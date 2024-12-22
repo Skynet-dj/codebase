@@ -1,9 +1,9 @@
 import os
 import json
 from rich.console import Console
-from codebase.scripts.commands.list_ import list_templates
-from codebase.scripts.com_util import project_exists, update_project, TEMPLATE_DIR, ar_, search_template
-from codebase.scripts.commands.open_ import open_template
+from .list_ import list_templates
+from ..com_util import project_exists, update_project, TEMPLATE_DIR, ar_, search_template
+from .open_ import open_template
 import shutil
 
 console = Console()

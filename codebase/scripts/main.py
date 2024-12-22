@@ -4,9 +4,9 @@ import subprocess
 from pyfiglet import Figlet
 import pyfiglet
 from rich.console import Console
-from codebase.scripts.com_util import CONFIG_FILE, ar_, tool_name
-from codebase.scripts.com_util import banner_color, banner_font
-from codebase.scripts.command_handle import command_handle, MissingArgumentError
+from .com_util import CONFIG_FILE, ar_, tool_name
+from .com_util import banner_color, banner_font
+from .command_handle import command_handle, MissingArgumentError
   
 
 # Initialize the console from Rich for color

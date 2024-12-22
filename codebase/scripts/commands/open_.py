@@ -1,6 +1,6 @@
 import json
 import subprocess
-from codebase.scripts.com_util import CONFIG_FILE,  text_editor_command
+from ..com_util import CONFIG_FILE,  text_editor_command
 
 
 def load_config():

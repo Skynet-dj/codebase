@@ -1,5 +1,5 @@
 import os
-from codebase.scripts.com_util import Table, console, load_projects, TEMPLATE_DIR
+from ..com_util import Table, console, load_projects, TEMPLATE_DIR
 
 def list_projects(flags=None):
     projects = load_projects()

@@ -1,7 +1,7 @@
 import subprocess
 from rich.console import Console
 from rich.tree import Tree
-from codebase.scripts.com_util import search_template, search_project
+from ..com_util import search_template, search_project
 
 console = Console()
 
