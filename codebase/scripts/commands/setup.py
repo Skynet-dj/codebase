@@ -116,7 +116,7 @@ def root_path_setup(root_path):
             console.print(f"\n[bold yellow]Root Directory: {input_} [/bold yellow]")
             return config
         elif not input_:
-            return
+            return 
         else:
             console.print("\n[bold red]The entered 'path' does not exist. Please try again.[/bold red]")
 
@@ -133,24 +133,25 @@ def save_to_json(config):
         json.dump(data, f, indent=4)
 
 
+def setup_main():
+    try:
+        console.print(f"\n[bold cyan]Welcome to SETUP[/bold cyan]")
+        is_setup = create_config()
+        config1 = editor_setup(is_setup)
+        root_path = create_config(True)
+        config2 = root_path_setup(root_path)
 
-try:
-    console.print(f"\n[bold cyan]Welcome to SETUP[/bold cyan]")
-    is_setup = create_config()
-    config1 = editor_setup(is_setup)
-    root_path = create_config(True)
-    config2 = root_path_setup(root_path)
+        save_to_json(config1)
+        if config2:
+            print("what is this")
+            save_to_json(config2)
+        save_to_json({"is_setup": True})
 
-    save_to_json(config1)
-    if config2:
-        save_to_json(config2)
-    save_to_json({"is_setup": True})
-
-    config_json = "\\".join((os.path.abspath(__file__).split("\\")[:-3] + ["data", "config.json"]))
-    console.print(f"\nTo config other variables refer to [magenta]{config_json}[/magenta]")
-    console.print(f"[bold yellow]SETUP COMPLETE[/bold yellow]")
-except KeyboardInterrupt:
-    console.print(f"\n\n[bold red]Setup Canceled! The changes won't be added![/bold red]")
+        config_json = "\\".join((os.path.abspath(__file__).split("\\")[:-3] + ["data", "config.json"]))
+        console.print(f"\nTo config other variables refer to [magenta]{config_json}[/magenta]")
+        console.print(f"[bold yellow]SETUP COMPLETE[/bold yellow]")
+    except KeyboardInterrupt:
+        console.print(f"\n\n[bold red]Setup Canceled! The changes won't be added![/bold red]")
 
 
 

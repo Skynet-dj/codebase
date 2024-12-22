@@ -4,7 +4,7 @@ import subprocess
 from rich.console import Console
 from .com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
 from .com_util import search_template, search_project, root_path
-from .commands import create, list_, open_, rm, see
+from .commands import create, list_, open_, rm, see, setup
 
 console = Console()
 
@@ -162,7 +162,7 @@ def command_handle(passed_command: str):
 
     # Command: setup
     elif cmd_name == "setup":
-        os.system("python codebase/scripts/commands/setup.py")
+        setup.setup_main()
     elif cmd_name == "exit":
         raise KeyboardInterrupt
     else:
