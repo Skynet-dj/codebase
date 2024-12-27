@@ -143,7 +143,6 @@ def setup_main():
 
         save_to_json(config1)
         if config2:
-            print("what is this")
             save_to_json(config2)
         save_to_json({"is_setup": True})
 
