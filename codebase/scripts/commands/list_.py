@@ -28,7 +28,7 @@ def list_projects(flags=None):
                         filtered_paths.append(project_path)
             all_names = list(set(all_names).intersection(filtered_names))
             all_paths = [all_paths[all_names.index(name)] for name in all_names]
-        if flags:
+        if flags and ["-p", "-s"] not in flags:
             console.print("[bold green]Not a valid flag[/bold green]")
             return
     else:
