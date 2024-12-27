@@ -6,7 +6,7 @@ from rich.table import Table
 console = Console()
 
 #common var/constants to be used throught the package
-tool_name: str = "Codebase"
+tool_name = "Codebase"
 ar_ = "[bold red]>>[/bold red]"
 #defaults
 text_editor = "Pyvim"

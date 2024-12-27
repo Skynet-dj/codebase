@@ -3,7 +3,7 @@ import json
 import subprocess
 from rich.console import Console
 from .com_util import CONFIG_FILE, COMMANDS_FILE, ar_, tool_name
-from .com_util import search_template, search_project, root_path
+from .com_util import search_template, search_project, root_path as rp
 from .commands import create, list_, open_, rm, see, setup
 
 console = Console()
@@ -11,6 +11,20 @@ console = Console()
 MissingArgumentError = type(f"MissingArgumentError:", (Exception,), {})
 
 def command_handle(passed_command: str):
+    # Load root_path
+    def load_root_path():
+        try:
+            with open(CONFIG_FILE, "r") as f:
+                return json.load(f)["root-path"]
+        except:
+            return 1     
+        
+    temp_path = load_root_path()
+    if temp_path != 1:
+        root_path = temp_path
+    else:
+        root_path = rp
+        
     # Load commands and configuration
     def load_command():
         try:
@@ -93,6 +107,11 @@ def command_handle(passed_command: str):
 
     # Command: open
     elif cmd_name == "open":
+        if len(command) == 2:
+            if command[1] == "config":
+                open_.open__(CONFIG_FILE)
+                return
+
         if len(command) < 3:
             raise MissingArgumentError(cmd_name)
 
@@ -104,16 +123,16 @@ def command_handle(passed_command: str):
             if not path:
                 return
             if "-e" in flags:                
-                open_.open_explorer(path)
+                open_.open__(path, True)
             elif "-E" in flags:
-                open_.open_explorer(path)
+                open_.open__(path, True)
                 return
-            open_.open_project(path)
+            open_.open__(path)
 
         elif target == "template":
             path = search_template(name, False, True)
             if path:
-                open_.open_template(path)
+                open_.open__(path)
                 return
 
     # Command: list

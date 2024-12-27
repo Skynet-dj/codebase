@@ -3,7 +3,6 @@ import json
 from rich.console import Console
 from rich.table import Table
 from ..com_util import CONFIG_FILE, PROJECTS_FILE, ar_,text_editor, text_editor_command
-
 console = Console()
 
 def create_config(root_path = False):

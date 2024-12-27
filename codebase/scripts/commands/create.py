@@ -3,13 +3,12 @@ import json
 from rich.console import Console
 from .list_ import list_templates
 from ..com_util import project_exists, update_project, TEMPLATE_DIR, ar_, search_template
-from .open_ import open_template
+from .open_ import open__
 import shutil
 
 console = Console()
     
 def create_project(temp_name, project_name, path = os.getcwd()) -> bool:
-    print(path)
     temp_data = search_template(temp_name)
     if not temp_data:
         return 
@@ -81,7 +80,7 @@ def create_template(temp_name: str, from_existing: bool=False) -> None :
         if search_template(temp, want_data=False):
             shutil.copy(f'{TEMPLATE_DIR}/{temp}.json', f'{TEMPLATE_DIR}/{temp_name}.json')
             #open the template in the configured editor 
-            open_template(temp_name)
+            open__(temp_name)
             return
     try:
         with open(f"{TEMPLATE_DIR}/{temp_name}.json", "x") as f:

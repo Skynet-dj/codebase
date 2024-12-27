@@ -11,18 +11,10 @@ def load_config():
         return text_editor_command
 
 
-
-def open_project(path: str) -> None:
-    command = load_config()
+def open__(path: str, exp: bool=False) -> None:
+    if exp:
+        command = "explorer"
+    else:
+     command = load_config()
     subprocess.run(f"{command} {path}", shell=True)
-    return
-
-def open_template(path: str) -> None:
-    command = load_config()
-    subprocess.run(f"{command} {path}", shell=True)
-    return
-
-def open_explorer(path: str, ) -> None:
-    command = load_config()
-    subprocess.run(f"explorer {path}", shell=True)
     return
