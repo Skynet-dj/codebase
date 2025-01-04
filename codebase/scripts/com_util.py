@@ -8,12 +8,14 @@ console = Console()
 #common var/constants to be used throught the package
 tool_name = "Codebase"
 ar_ = "[bold red]>>[/bold red]"
+
 #defaults
 text_editor = "Pyvim"
 text_editor_command = "pyvim"
 root_path = ""
 banner_font = "ansi_regular"
 banner_color = "red"
+
 CONFIG_FILE = "codebase/data/config.json"
 PROJECTS_FILE = "codebase/data/projects.json"
 TEMPLATE_DIR = "codebase/templates"

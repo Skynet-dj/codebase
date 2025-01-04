@@ -76,7 +76,7 @@ def display_intro(console_width):
 #5.Command Usage              = Bold Blue
 #6.Input Arrow: ">>"          = Bold Red
 #7.Path                       = Magenta
-#I'm gonna use any color I like for the tables 
+#I'm gonna use any color I like for the tables and anything else
 
 
 current_width = os.get_terminal_size().columns
