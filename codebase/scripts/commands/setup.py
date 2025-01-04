@@ -140,7 +140,8 @@ def setup_main():
         root_path = create_config(True)
         config2 = root_path_setup(root_path)
 
-        save_to_json(config1)
+        if config1:
+            save_to_json(config1)
         if config2:
             save_to_json(config2)
         save_to_json({"is_setup": True})
