@@ -59,7 +59,7 @@ def search_template(temp_name: str, want_data: bool=True, temp_path: bool=False)
 def search_project(project_name: str, ask_if_multiple: bool = False, projects=load_projects()):
     if project_name not in projects:
         console.print(f"[bold red]Project '{project_name}' does not exist.[/bold red]")
-        console.print(f"Use 'list projects' to see existng tempaltes")
+        console.print(f"Use 'list projects' to see existng projects")
         return 
     project_paths =  projects[project_name]  
     if not ask_if_multiple:

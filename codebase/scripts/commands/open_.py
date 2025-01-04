@@ -12,9 +12,8 @@ def load_config():
 
 
 def open__(path: str, exp: bool=False) -> None:
+    command = load_config()
     if exp:
-        command = "explorer"
-    else:
-     command = load_config()
+        command = "explorer"        
     subprocess.run(f"{command} {path}", shell=True)
     return
